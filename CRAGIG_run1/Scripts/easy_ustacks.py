@@ -1,27 +1,10 @@
 ##########################################################################################
-#
 ### ``ustacks``
-#
-# PURPOSE: This step aligns identical RAD tags within an individual into stacks & provides data for calling SNPs
-# INPUT: fastq or gzfastq files
-# OUTPUT: 4 files - alleles, modules, snps, tags
-#
-#
-### WHEN RUNNING THIS SCRIPT, YOUR INPUTS AT THE COMMAND LINE ARE:
-# python
-# {0}[pipeline filename]
-# {1}[barcodes & samples textfile]
-# {2}[start directory]
-# {3}[end directory]
-#
-### DEPENDENCIES
-#
-# [1] You need a file where first column is barcode and second is unique sample name
-#
-### WARNINGS
-#
-# [1] ustacks only works when your working directory is one direcotry above the folders you are
-#		calling and storing data in
+
+
+
+
+# Assumptions: order of samples in sample list and barcode list is identical; lengths of two lists identical
 #
 ##########################################################################################
 
@@ -44,7 +27,11 @@ parser.add_argument("-M", "--maxdis", help="maximum distance in nucleotides allo
 parser.add_argument("-p", "--threads", help="allow parallel execution with p num threads", type=int)
 parser.add_argument("-x", "--startID", help="starting number for SQL ID intger if not starting at 001", type=int)
 parser.add_argument("-s", "--samples", help="text file with list of samples for ustacks, each on its own new line")
+parser.add_argument("-c", "--count", help="name of text file that will store unique loci count data", type=str, required=True)
+parser.add_argument("-P", "--popmap", help="population map", type=str)
+
 args = parser.parse_args()
+
 
 ### make lists of inputs that will go directly into stacks with same flags - here, all but --samples and --startID and --inputdir
 stacksin = [args.type, args.out, args.mindepth, args.maxdis, args.threads]
@@ -161,7 +148,62 @@ end = time.time()
 print "\nRunning ustacks took "
 timer(start,end)
 
-### plot
+### plotting results
+
+## (1) get counts of unique loci per tags file using Eleni's bash command
+
+countbash = ""
+firststr = "cd " + args.out + "\n"
+countbash += firststr
+
+populations = []
+samples_in_popmap = []
+
+popmap = open(args.popmap, "r")
+for line in popmap:
+	linelist = line.strip().split()
+	sample_popord = linelist[0]
+	samples_in_popmap.append(sample_popord)
+	pop = linelist[1]
+	populations.append(pop)
+
+for sample in samples_in_popmap:
+	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv > " + args.count + "/n"
+	countbash += countstring
+subprocess.call([countbash], shell = True)
+
+## (2) read file back in
+
+countresults = open(args.count, "r")
+lines = countresults.readlines()
+counts = []
+for line in lines:
+	linelist = line.strip().split(":")
+	count = linelist[1]
+	counts.append(count)
+countresults.close()
+
+## (3) make dataframe with population
+
+populations = []
+
+popmap = open(args.popmap, "r")
+for line in popmap:
+	linelist = line.strip().split()
+	pop = linelist[1]
+	populations.append(pop)
+
+df = pd.DataFrame(
+    {'Population':populations,
+     'Counts':counts}
+)
+
+print df
+
+
+
+
+
 
 
 
