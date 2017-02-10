@@ -30,13 +30,14 @@ import sys
 import subprocess
 import time
 import argparse
+import numpy
 
 # organize parameter inputs with argparse
 parser = argparse.ArgumentParser(description="Write and call a ustacks shell script, and plot results")
 parser.add_argument("-t", "--type", help="input file type; supported types: fasta, fastq, gzfasta, gzfastsq", type=str, required = True)
 parser.add_argument("-i", "--inputdir", help="relative path to directory with samples for ustacks", type=str, required=True)
-parser.add_argument("-r", "--removal", help="enable the removal algorithm to drop highly-repetitive stacks", type=str)
-parser.add_argument("-d", "--delever", help="enable the deleveraging algortih for resolving merged tags", type=str)
+parser.add_argument("-r", "--removal", help="enable the removal algorithm to drop highly-repetitive stacks", action='store_true')
+parser.add_argument("-d", "--delever", help="enable the deleveraging algortih for resolving merged tags", action='store_true')
 parser.add_argument("-o", "--out", help="output path to write results", type=str)
 parser.add_argument("-m", "--mindepth", help="minimum depth of coverage required to create a stack; default 2", type=int)
 parser.add_argument("-M", "--maxdis", help="maximum distance in nucleotides allowed between stacks", type=int)
@@ -46,8 +47,8 @@ parser.add_argument("-s", "--samples", help="text file with list of samples for 
 args = parser.parse_args()
 
 ### make lists of inputs that will go directly into stacks with same flags - here, all but --samples and --startID and --inputdir
-stacksin = [args.type, args.output, args.mindepth, args.maxdis, args.threads]
-stacksfl = ["-p", "-o", "-n", "m", "M", "p"]
+stacksin = [args.type, args.out, args.mindepth, args.maxdis, args.threads]
+stacksfl = ["-t", "-o", "-m", "-M", "-p"]
 
 ### make list of flags that don't have parameter inputs, and list of flags; must match order
 jflags_args = [args.removal, args.delever]
@@ -73,61 +74,96 @@ jflags_inc = []
 jflags_exc = []
 
 for i in range(0,numjflags):
-	if jflags_args[i] == None:
-		flags_exc.append(jflags[i])
+	if jflags_args[i] == False:
+		jflags_exc.append(jflags[i])
 	else:
-		flags_inc.append(jflags[i])
+		jflags_inc.append(jflags[i])
+
+string_flags = ""
+for item in jflags_inc:
+	string_flags += item + " "
+print string_flags
 
 ### get sample names into list
 
-samples = open(args.samples, "r")
-lines = samples.readlines()
+samples = open(args.samples, "r") # open file with samle names for reading
+lines = samples.readlines() # get lines in the file
 
-samples_for_use = []
+samples_for_use = [] # iniate list for sample names
 
-for line in lines:
+for line in lines: # loop over names, remove white space, store in list
 	name = line.strip()
 	samples_for_use.append(name)
-samples_file.close()
+samples.close() # close file
 
-print samples_for_use
+numsamples = len(samples_for_use) # get number of samples in ustacks run
+
+start_ID = [] # set starting point at 1 if default or at specified starting point
+if args.startID == None:
+	start_ID.append(0)
+else:
+	start_ID.append(args.startID)
+
+start_int = int(start_ID[0])
+IDs = range(start_int,(start_int+numsamples))
+
+### write ustacks shell string
+
+ustacks_shell_str = "" # initialize string to write as shell script
+for i in range(0,numsamples):
+	linestr = "stacks ustacks "
+	linestr += "-s " + args.inputdir + "/" + samples_for_use[i] + ".fq.gz" + " "
+	linestr += "-i " + str(IDs[i]) + " "
+	for key, value in inc_d.iteritems():
+		linestr += str(key) + " " + str(value) + " "
+	linestr += string_flags
+	ustacks_shell_str += linestr + "/n"
+
+
+print "Your ustacks shell script looks like this: \n" # show the user the bash script
+print ustacks_shell_str
+
+### ask user if okay and whether to proceed after seeing bash script printed to screen
+
+def simple_getinput(prompt, YES_string, NO_string, else_string):
+	answer = raw_input(prompt)
+	if answer == "YES":
+		print YES_string
+	elif answer == "NO":
+		sys.exit(NO_string)
+	else:
+		print else_string
+		simple_getinput(prompt, YES_string, NO_string, else_string)
+
+prompt = "\nType YES if correct. Type NO if incorrect and check your code."
+YES_string = "\nScript verified. Program continuing."
+NO_string = "\nRuh-roh. Something's wrong. Check your code and verify it matches your expectations."
+else_string = "\nYour answer is not a valid input. Only YES and NO are valid inputs."
+simple_getinput(prompt, YES_string, NO_string, else_string)
+
+### define function for timing bash script subprocess
+
+def timer(start,end):
+	hours, rem = divmod(end-start, 3600)
+	minutes, seconds = divmod(rem, 60)
+	print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+
+start = time.time()
+
+### run the bash script
+
+#subprocess.call(["sh ustacks_shell.txt"], shell = True)
+
+### time the subprocess
+
+end = time.time()
+
+print "\nRunning ustacks took "
+timer(start,end)
+
+### plot
 
 
 
 
-
-
-
-
-
-
-
-
-# dir = sys.argv[2] # directory files that need names changed
-# firststr = "cd " + dir + "\n"
-# new_file.write(firststr)
-
-# dir2 = sys.argv[2] # directory with files that we want to run ustacks on
-#
-# ID_int = 001								# start integer counter
-#
-# lines = myfile.readlines()[2:] # skip first two lines because just cd and pwd
-
-#
-# ID_int = 001								# start integer counter
-# for line in lines: 			#for each line in the barcode file
-# 	linelist=line.strip().split()
-# 	sampID = linelist[1] #save the second object as "sampID"
-# 	if ID_int < 10:
-# 		ustacks_code = "stacks ustacks -t gzfastq -f " + dirfrom + "/" + sampID + ".fq.gz" + " -r -d -o " + dirto + " -i 00" + str(ID_int) + " -m 10 -M 3 -p 10" + "\n"
-# 								#create a line of code for ustacks that includes the new sample ID (with 2 leading 0s)
-# 	elif ID_int >= 10 & ID_int < 100:
-# 		ustacks_code = "stacks ustacks -t gzfastq -f " + dirfrom + "/" + sampID + ".fq.gz" + " -r -d -o " + dirto + " -i 0" + str(ID_int) + " -m 10 -M 3 -p 10" + "\n"
-# 								#create a line of code for ustacks that includes the new sample ID (with 1 leading 0)
-# 	else:
-# 		ustacks_code = "stacks ustacks -t gzfastq -f " + dirfrom + "/" + sampID + ".fq.gz" +" -r -d -o " + dirto + " -i " + str(ID_int) + " -m 10 -M 3 -p 10" + "\n"
-# 								#create a line of code for ustacks that includes the new sample ID (with no leading 0s)
-# 	newfile2.write(ustacks_code)	#append this new line of code to the output file
-# 	ID_int += 1
-
-##########################################################################################
+#########################################################################################
