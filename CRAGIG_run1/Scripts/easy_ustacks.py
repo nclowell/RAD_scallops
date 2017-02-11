@@ -150,7 +150,7 @@ timer(start,end)
 
 ### plotting results
 
-## (1) get counts of unique loci per tags file using Eleni's bash command
+## (1) get counts of unique loci per tags file using Eleni's bash command and order of samples
 
 countbash = ""
 firststr = "cd " + args.out + "\n"
