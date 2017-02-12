@@ -151,7 +151,7 @@ timer(start,end)
 
 ### plotting results
 
-## (1) get counts of unique loci per tags file using Eleni's bash command and order of samples
+# (1) get counts of unique loci per tags file using Eleni's bash command and order of samples
 
 countbash = ""
 firststr = "cd " + args.out + "\n"
@@ -173,7 +173,7 @@ for sample in samples_in_popmap:
 	countbash += countstring
 subprocess.call([countbash], shell = True)
 
-## (2) read file back in
+# (2) read file back in
 
 countresults = open(args.count, "r")
 lines = countresults.readlines()
@@ -184,32 +184,40 @@ for line in lines:
 	counts.append(count)
 countresults.close()
 
-## (3) verify length of populations, counts, and samples all same length
+# (3) verify length of populations, counts, and samples all same length
 
 length1 = len(populations)
 length2 = len(samples_in_poporder)
 length3 = len(counts)
 
 if length1 == length2 == length3:
-	print ""
+	print "Number of populations, counts, and samples equal. Continuing to plot."
+else:
+	print "The length of your population, counts, and samples lists are not equal. Check your code and files. Program will quit."
+	sys.exit()
+
+#
 
 pops_set = set(populations)
 
+data_array = []
 
+set_pops = list(set(populations))
+num_set_pops = len(set_pops)
 
+print set_pops # looks like ['CA', 'AK', 'WA']
 
-# df = pd.DataFrame(
-#     {'Population':populations,
-#      'Counts':counts}
-# )
-#
-# print df
+for pop in set_pops:
+	indeces = [i for i, x in enumerate(populations) if x == pop]
+	data_array.append(indeces)
 
+print data_array
 
-
-
-for pop in setpops:
-	indeces = [i for i, x in enumerate(pops) if x =="WA"]
+plt.boxplot(data_array)
+plt.xticks(range(1,num_set_pops+1),set_pops)
+plt.ylabel('Number of loci retained per individual')
+plt.suptitle('Retained loci by population after ustacks')
+plt.show()
 
 
 
