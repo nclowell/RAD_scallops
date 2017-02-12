@@ -37,9 +37,7 @@ parser.add_argument("-x", "--startID", help="starting number for SQL ID intger i
 parser.add_argument("-s", "--samples", help="text file with list of samples for ustacks, each on its own new line")
 parser.add_argument("-c", "--count", help="name of text file that will store unique loci count data", type=str, required=True)
 parser.add_argument("-P", "--popmap", help="population map", type=str)
-
 args = parser.parse_args()
-
 
 # make lists of inputs that will go directly into stacks with same flags - here, all but --samples and --startID and --inputdir
 stacksin = [args.type, args.out, args.mindepth, args.maxdis, args.threads]
@@ -78,18 +76,20 @@ for item in jflags_inc:
 	string_flags += item + " "
 print string_flags
 
-### get sample names into list
-samples = open(args.samples, "r") # open file with samle names for reading
-lines = samples.readlines() # get lines in the file
 
-samples_for_use = [] # iniate list for sample names
+# get list of population labels and list of samples in population map order
+populations = []
+samples_in_poporder = []
 
-for line in lines: # loop over names, remove white space, store in list
-	name = line.strip()
-	samples_for_use.append(name)
-samples.close() # close file
-
-numsamples = len(samples_for_use) # get number of samples in ustacks run
+popmap = open(args.popmap, "r")
+for line in popmap:
+	linelist = line.strip().split()
+	sample_popord = linelist[0]
+	samples_in_poporder.append(sample_popord)
+	pop = linelist[1]
+	populations.append(pop)
+popmap.close()
+numsamples = len(samples_in_poporder) # get number of samples in ustacks run
 
 start_ID = [] # set starting point at 1 if default or at specified starting point
 if args.startID == None:
@@ -104,7 +104,7 @@ IDs = range(start_int,(start_int+numsamples))
 ustacks_shell_str = "" # initialize string to write as shell script
 for i in range(0,numsamples):
 	linestr = "stacks ustacks "
-	linestr += "-s " + args.inputdir + "/" + samples_for_use[i] + ".fq.gz" + " "
+	linestr += "-s " + args.inputdir + "/" + samples_in_poporder[i] + ".fq.gz" + " "
 	linestr += "-i " + str(IDs[i]) + " "
 	for key, value in inc_d.iteritems():
 		linestr += str(key) + " " + str(value) + " "
@@ -142,7 +142,7 @@ def timer(start,end):
 start = time.time() # get start time
 
 ### run the bash script
-subprocess.call(["sh ustacks_shell.txt"], shell = True)
+# subprocess.call(["sh ustacks_shell.txt"], shell = True)
 
 end = time.time() # get end time
 
