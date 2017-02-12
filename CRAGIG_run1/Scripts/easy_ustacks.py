@@ -3,13 +3,14 @@
 #
 # 20170212 NL
 #
-# purpose: writes a bash script to run ustacks, executes bash script, counts retained loci after ustacks, plots retained loci
+# purpose of ``easy ustacks``: writes a bash script to run ustacks, executes bash script, counts retained loci after ustacks, plots retained loci
+# purpose of ustacks: align sequences to matching stacks within an individual to form set of loci and detect SNPs
 #
 # inputs via argparse: file type, input directory, removal algorithm, develeraging algorithm,
 #						output directory, min depth, max distance, num threads, start ID, samples
 #						name for counts file, pop map with only samples in this ustacks run
 #
-# outputs: tags, snps, and alleles files per sample and plot of retained loci per individual per population
+# outputs: tags, SNPs, and alleles files per sample and plot of retained loci per individual per population
 #
 # assumptions: pop map only includes the samples you want to run ustacks on
 #
