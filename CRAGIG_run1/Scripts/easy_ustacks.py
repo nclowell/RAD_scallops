@@ -1,6 +1,8 @@
 ##########################################################################################
 ### ``easy ustacks``
 #
+# 20170212 NL
+#
 # purpose: writes a bash script to run ustacks, executes bash script, counts retained loci after ustacks, plots retained loci
 #
 # inputs via argparse: file type, input directory, removal algorithm, develeraging algorithm,
@@ -38,16 +40,15 @@ parser.add_argument("-P", "--popmap", help="population map", type=str)
 args = parser.parse_args()
 
 
-### make lists of inputs that will go directly into stacks with same flags - here, all but --samples and --startID and --inputdir
+# make lists of inputs that will go directly into stacks with same flags - here, all but --samples and --startID and --inputdir
 stacksin = [args.type, args.out, args.mindepth, args.maxdis, args.threads]
 stacksfl = ["-t", "-o", "-m", "-M", "-p"]
 
-### make list of flags that don't have parameter inputs, and list of flags; must match order
+# make list of flags that don't have parameter inputs, and list of flags; must match order
 jflags_args = [args.removal, args.delever]
 jflags = ["-r","-d"]
 
-###  build a dictionary to store parameter inputs for those used here
-
+#  build a dictionary to store parameter inputs for those used here
 inc_d = {} # initiate dictionary of included arguments
 exc_d = {} # initatie dictionary to store excluded arguments
 
@@ -59,7 +60,7 @@ for i in range(0,numpar): # loop to sort arguments and input parameters for each
 	else:
 		inc_d[stacksfl[i]] = stacksin[i]
 
-### build a string with just flags used here
+# build a string with just flags used here
 numjflags = len(jflags) # get length of total just flags
 
 jflags_inc = []
@@ -77,7 +78,6 @@ for item in jflags_inc:
 print string_flags
 
 ### get sample names into list
-
 samples = open(args.samples, "r") # open file with samle names for reading
 lines = samples.readlines() # get lines in the file
 
@@ -100,7 +100,6 @@ start_int = int(start_ID[0])
 IDs = range(start_int,(start_int+numsamples))
 
 ### write ustacks shell string
-
 ustacks_shell_str = "" # initialize string to write as shell script
 for i in range(0,numsamples):
 	linestr = "stacks ustacks "
@@ -111,12 +110,10 @@ for i in range(0,numsamples):
 	linestr += string_flags
 	ustacks_shell_str += linestr + "/n"
 
-
 print "Your ustacks shell script looks like this: \n" # show the user the bash script
 print ustacks_shell_str
 
-### ask user if okay and whether to proceed after seeing bash script printed to screen
-
+# ask user if script okay and whether to proceed after seeing bash script printed to screen
 def simple_getinput(prompt, YES_string, NO_string, else_string):
 	answer = raw_input(prompt)
 	if answer == "YES":
@@ -133,29 +130,27 @@ NO_string = "\nRuh-roh. Something's wrong. Check your code and verify it matches
 else_string = "\nYour answer is not a valid input. Only YES and NO are valid inputs."
 simple_getinput(prompt, YES_string, NO_string, else_string)
 
-### define function for timing bash script subprocess
+### time running of ustacks
 
+# write timing function
 def timer(start,end):
 	hours, rem = divmod(end-start, 3600)
 	minutes, seconds = divmod(rem, 60)
 	print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
 
-start = time.time()
+start = time.time() # get start time
 
 ### run the bash script
-
 subprocess.call(["sh ustacks_shell.txt"], shell = True)
 
-### time the subprocess
-
-end = time.time()
+end = time.time() # get end time
 
 print "\nRunning ustacks took "
-timer(start,end)
+timer(start,end) # report time
 
 ### plotting results
 
-# (1) get counts of unique loci per tags file using Eleni's bash command and order of samples
+# get counts of unique loci per tags file using Eleni's bash command and order of samples
 
 countbash = ""
 firststr = "cd " + args.out + "\n"
@@ -175,10 +170,11 @@ for line in popmap:
 for sample in samples_in_poporder:
 	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "/n"
 	countbash += countstring
+
+# run counting bash script
 subprocess.call([countbash], shell = True)
 
-# (2) read file back in
-
+# read results in
 countresults = open(args.count, "r")
 lines = countresults.readlines()
 counts = []
@@ -188,11 +184,7 @@ for line in lines:
 	counts.append(count)
 countresults.close()
 
-print "look here:"
-print counts
-
-# (3) verify length of populations, counts, and samples all same length
-
+# verify length of populations, counts, and samples all same length; otherwise something's wrong
 length1 = len(populations)
 length2 = len(samples_in_poporder)
 length3 = len(counts)
@@ -203,31 +195,26 @@ else:
 	print "The length of your population, counts, and samples lists are not equal. Check your code and files. Program will quit."
 	sys.exit()
 
-#
 
-pops_set = set(populations)
-
+# get list of list where each sublist is a unique pop with list of counts
 data_array = []
 
-set_pops = list(set(populations))
-num_set_pops = len(set_pops)
-
-print set_pops # looks like ['CA', 'AK', 'WA']
+set_pops = list(set(populations)) # get unique pops from pops factor list
+num_set_pops = len(set_pops) # get num pops
 
 for pop in set_pops:
-	indeces = [i for i, x in enumerate(populations) if x == pop]
+	indeces = [i for i, x in enumerate(populations) if x == pop] # collect indeces of one list when value matches in second list
 	matches = []
 	for i in indeces:
-		matches.append(counts[i])
-	data_array.append(matches)
+		matches.append(counts[i]) # get counts with those matching indeces and put in list
+	data_array.append(matches) # append list within bigger list for plotting
 
-print data_array
-
-plt.boxplot(data_array)
-plt.xticks(range(1,num_set_pops+1),set_pops)
-plt.ylabel('Number of loci retained per individual')
-plt.suptitle('Retained loci by population after ustacks')
-plt.show()
+# plot with matplotlib pyplot
+plt.boxplot(data_array) # multiple box plots with list of lists
+plt.xticks(range(1,num_set_pops+1),set_pops) # label x axis with population names
+plt.ylabel('Number of loci retained per individual') # axis label
+plt.suptitle('Retained loci by population after ustacks') # title
+plt.show() # show plot
 
 
 
