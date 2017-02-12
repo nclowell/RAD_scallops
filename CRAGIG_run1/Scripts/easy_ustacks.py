@@ -1,8 +1,13 @@
 ##########################################################################################
-### ``ustacks``
-
-
-
+### ``easy ustacks``
+#
+# purpose: writes a bash script to run ustacks, executes bash script, counts retained loci after ustacks, plots retained loci
+#
+# inputs via argparse: file type, input directory, removal algorithm, develeraging algorithm,
+#						output directory, min depth, max distance, num threads, start ID, samples
+#						name for counts file, pop map with only samples in this ustacks run
+#
+# outputs: tags, snps, and alleles files per sample and plot of retained loci per individual per population
 
 # Assumptions: order of samples in sample list and barcode list is identical; lengths of two lists identical
 #
@@ -13,7 +18,6 @@ import sys
 import subprocess
 import time
 import argparse
-import numpy
 import matplotlib.pyplot as plt
 
 # organize parameter inputs with argparse
@@ -140,7 +144,7 @@ start = time.time()
 
 ### run the bash script
 
-#subprocess.call(["sh ustacks_shell.txt"], shell = True)
+subprocess.call(["sh ustacks_shell.txt"], shell = True)
 
 ### time the subprocess
 
@@ -168,7 +172,7 @@ for line in popmap:
 	pop = linelist[1]
 	populations.append(pop)
 
-for sample in samples_in_popmap:
+for sample in samples_in_poporder:
 	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "/n"
 	countbash += countstring
 subprocess.call([countbash], shell = True)
@@ -180,9 +184,12 @@ lines = countresults.readlines()
 counts = []
 for line in lines:
 	linelist = line.strip().split(":")
-	count = linelist[1]
+	count = int(linelist[1])
 	counts.append(count)
 countresults.close()
+
+print "look here:"
+print counts
 
 # (3) verify length of populations, counts, and samples all same length
 
@@ -209,7 +216,10 @@ print set_pops # looks like ['CA', 'AK', 'WA']
 
 for pop in set_pops:
 	indeces = [i for i, x in enumerate(populations) if x == pop]
-	data_array.append(indeces)
+	matches = []
+	for i in indeces:
+		matches.append(counts[i])
+	data_array.append(matches)
 
 print data_array
 
