@@ -10,8 +10,8 @@
 #						name for counts file, pop map with only samples in this ustacks run
 #
 # outputs: tags, snps, and alleles files per sample and plot of retained loci per individual per population
-
-# Assumptions: order of samples in sample list and barcode list is identical; lengths of two lists identical
+#
+# assumptions: pop map only includes the samples you want to run ustacks on
 #
 ##########################################################################################
 
@@ -151,7 +151,6 @@ timer(start,end) # report time
 ### plotting results
 
 # get counts of unique loci per tags file using Eleni's bash command and order of samples
-
 countbash = ""
 firststr = "cd " + args.out + "\n"
 countbash += firststr
@@ -216,7 +215,4 @@ plt.ylabel('Number of loci retained per individual') # axis label
 plt.suptitle('Retained loci by population after ustacks') # title
 plt.show() # show plot
 
-
-
-
-#########################################################################################
+################################################################################
