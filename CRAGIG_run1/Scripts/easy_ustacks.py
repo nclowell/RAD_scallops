@@ -14,6 +14,7 @@ import subprocess
 import time
 import argparse
 import numpy
+import matplotlib.pyplot as plt
 
 # organize parameter inputs with argparse
 parser = argparse.ArgumentParser(description="Write and call a ustacks shell script, and plot results")
@@ -157,18 +158,18 @@ firststr = "cd " + args.out + "\n"
 countbash += firststr
 
 populations = []
-samples_in_popmap = []
+samples_in_poporder = []
 
 popmap = open(args.popmap, "r")
 for line in popmap:
 	linelist = line.strip().split()
 	sample_popord = linelist[0]
-	samples_in_popmap.append(sample_popord)
+	samples_in_poporder.append(sample_popord)
 	pop = linelist[1]
 	populations.append(pop)
 
 for sample in samples_in_popmap:
-	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv > " + args.count + "/n"
+	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "/n"
 	countbash += countstring
 subprocess.call([countbash], shell = True)
 
@@ -183,27 +184,32 @@ for line in lines:
 	counts.append(count)
 countresults.close()
 
-## (3) make dataframe with population
+## (3) verify length of populations, counts, and samples all same length
 
-populations = []
+length1 = len(populations)
+length2 = len(samples_in_poporder)
+length3 = len(counts)
 
-popmap = open(args.popmap, "r")
-for line in popmap:
-	linelist = line.strip().split()
-	pop = linelist[1]
-	populations.append(pop)
+if length1 == length2 == length3:
+	print ""
 
-df = pd.DataFrame(
-    {'Population':populations,
-     'Counts':counts}
-)
-
-print df
+pops_set = set(populations)
 
 
 
 
+# df = pd.DataFrame(
+#     {'Population':populations,
+#      'Counts':counts}
+# )
+#
+# print df
 
+
+
+
+for pop in setpops:
+	indeces = [i for i, x in enumerate(pops) if x =="WA"]
 
 
 
