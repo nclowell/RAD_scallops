@@ -145,7 +145,7 @@ def timer(start,end):
 start = time.time() # get start time
 
 ### run the bash script
-subprocess.call(["sh ustacks_shell.txt"], shell = True)
+# subprocess.call(["sh ustacks_shell.txt"], shell = True)
 
 end = time.time() # get end time
 
@@ -171,14 +171,16 @@ for line in popmap:
 	populations.append(pop)
 
 for sample in samples_in_poporder:
-	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "\n"
+	countstring = "zgrep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "\n"
 	countbash += countstring
+
+print countbash
 
 # run counting bash script
 subprocess.call([countbash], shell = True)
 
 # read results in
-countresults = open(args.count, "r")
+countresults = open(args.out + "/" + args.count, "r")
 lines = countresults.readlines()
 counts = []
 for line in lines:
