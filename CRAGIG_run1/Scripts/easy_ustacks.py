@@ -34,7 +34,6 @@ parser.add_argument("-m", "--mindepth", help="minimum depth of coverage required
 parser.add_argument("-M", "--maxdis", help="maximum distance in nucleotides allowed between stacks", type=int)
 parser.add_argument("-p", "--threads", help="allow parallel execution with p num threads", type=int)
 parser.add_argument("-x", "--startID", help="starting number for SQL ID intger if not starting at 001", type=int)
-parser.add_argument("-s", "--samples", help="text file with list of samples for ustacks, each on its own new line")
 parser.add_argument("-c", "--count", help="name of text file that will store unique loci count data", type=str, required=True)
 parser.add_argument("-P", "--popmap", help="population map", type=str)
 args = parser.parse_args()
@@ -104,12 +103,12 @@ IDs = range(start_int,(start_int+numsamples))
 ustacks_shell_str = "" # initialize string to write as shell script
 for i in range(0,numsamples):
 	linestr = "stacks ustacks "
-	linestr += "-s " + args.inputdir + "/" + samples_in_poporder[i] + ".fq.gz" + " "
+	linestr += "-f " + args.inputdir + "/" + samples_in_poporder[i] + ".fq.gz" + " "
 	linestr += "-i " + str(IDs[i]) + " "
 	for key, value in inc_d.iteritems():
 		linestr += str(key) + " " + str(value) + " "
 	linestr += string_flags
-	ustacks_shell_str += linestr + "/n"
+	ustacks_shell_str += linestr + "\n"
 
 print "Your ustacks shell script looks like this: \n" # show the user the bash script
 print ustacks_shell_str
@@ -131,6 +130,10 @@ NO_string = "\nRuh-roh. Something's wrong. Check your code and verify it matches
 else_string = "\nYour answer is not a valid input. Only YES and NO are valid inputs."
 simple_getinput(prompt, YES_string, NO_string, else_string)
 
+ustacks_shell = open('ustacks_shell.txt', "w")
+ustacks_shell.write(ustacks_shell_str)
+ustacks_shell.close()
+
 ### time running of ustacks
 
 # write timing function
@@ -142,7 +145,7 @@ def timer(start,end):
 start = time.time() # get start time
 
 ### run the bash script
-# subprocess.call(["sh ustacks_shell.txt"], shell = True)
+subprocess.call(["sh ustacks_shell.txt"], shell = True)
 
 end = time.time() # get end time
 
@@ -168,7 +171,7 @@ for line in popmap:
 	populations.append(pop)
 
 for sample in samples_in_poporder:
-	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "/n"
+	countstring = "grep --count --with-filename consensus " + sample + ".tags.tsv >> " + args.count + "\n"
 	countbash += countstring
 
 # run counting bash script
