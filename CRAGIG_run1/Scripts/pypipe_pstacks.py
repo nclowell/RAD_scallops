@@ -19,28 +19,27 @@
 #
 ##########################################################################################
 
-
 import sys
 import subprocess
+import time
 
 namelist = []
-
 names = open(sys.argv[1], "r")
 for line in names:
 	name = line.strip()
 	namelist.append(name)
-
 names.close()
 
 string = ""
 
-# example text from Eleni's code
-# pstacks -p 8 -t sam -f ./aligned/exp1_dam.sam -o ./stacks -i 1 -m 3
+IDs = range(1,72)
+print IDs
+print str(len(IDs)) + " in list IDs"
 
-IDs = range(0,71)
+for i in range(0,71):
+	substring = "stacks pstacks -p 5 -m 10 -t sam -i " + str(IDs[i]) + " -f Stacks/" + namelist[i] + ".sam " + "-o Stacks" + "\n"
+	string += substring
 
-for i in enumerate(namelist):
-	string += "stacks pstacks -p 5 -m 10 -t sam -i" IDs[i] + " -f " + namelist[i] + ".sam " + " -o Stacks" + "\n"
 pstacks_shell = open("pstacks_shell.txt", "w")
 pstacks_shell.write(string)
 pstacks_shell.close()
@@ -72,8 +71,7 @@ def timer(start,end):
 
 start = time.time() # get start time
 
-# subprocess.call(["sh pstacks_shell.txt"], shell = True)
-
+subprocess.call(["sh pstacks_shell.txt"], shell = True)
 print "Finished running pstacks_shell.txt script."
 
 end = time.time() # get end time
