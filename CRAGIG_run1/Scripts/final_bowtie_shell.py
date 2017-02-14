@@ -10,9 +10,7 @@
 # python
 # {0}[pypipe_pstacks.py]
 # {1}[file with fastq filenames, here prt_out_filenames.txt]
-# {2}[number of mismatches allowed, usually 3]
-# {3}[bowtie index name, e.g., batch_100_final_index.]
-# {4}[filepath for output file]
+# {2}[bowtie index name, e.g., batch_100_final_index.]
 ### DEPENDENCIES:
 # [1] you want a SAM file without the header line
 # [2] you're reading in fastq files
@@ -24,6 +22,7 @@
 
 import sys
 import subprocess
+import time
 
 namelist = [] # for counting how many names we have
 filenames = open(sys.argv[1], "r")
@@ -53,13 +52,37 @@ simple_getinput(prompt, YES_string, NO_string, else_string)
 
 bashstring = ""
 
+print namelist
+
 for name in namelist:
-stringforfile = "bowtie -q -v 3 --norc --sam " + sys.argv[3] +  " " + name + ".fq.gz " + name + ".sam" + "\n:"# write string for shell script
+	stringforfile = "bowtie -q -v 3 --norc --sam Blast/" + sys.argv[2] +  " Stacks/" + name + ".fq " + "Stacks/" + name + ".sam" + "\n"# write string for shell script
+	bashstring += stringforfile
 
 final_bowtie_shell = open("final_bowtie_shell.txt", "w") # open new file for writing shell script
-final_bowtie_shell.write(stringforfile)
+final_bowtie_shell.write(bashstring)
 final_bowtie_shell.close()
 
-print stringforfile
+print "Your bash script looks like this: \n"
+print bashstring
 
-# subprocess.call(["sh final_bowtie_shell.txt"], shell = True) # run shell script
+prompt = "\nType YES if correct. Type NO if incorrect and check your code."
+YES_string = "\nScript verified. Program continuing."
+NO_string = "\nRuh-roh. Something's wrong. Check your code and verify it matches your expectations."
+else_string = "\nYour answer is not a valid input. Only YES and NO are valid inputs."
+simple_getinput(prompt, YES_string, NO_string, else_string)
+
+
+# write timing function
+def timer(start,end):
+	hours, rem = divmod(end-start, 3600)
+	minutes, seconds = divmod(rem, 60)
+	print("{:0>2}:{:0>2}:{:05.2f}".format(int(hours),int(minutes),seconds))
+
+start = time.time() # get start time
+
+subprocess.call(["sh final_bowtie_shell.txt"], shell = True) # run shell script
+
+end = time.time() # get end time
+
+print "\nRunning bowtie took "
+timer(start,end) # report time
