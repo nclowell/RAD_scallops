@@ -1,5 +1,5 @@
 ## Good Enough Practices in Scientific Computing
-Wilson et al, 2016, PLOS
+Wilson et al, 2016, [PLOS](https://arxiv.org/pdf/1609.00037.pdf)
 
 #### Data management
 - Save the raw data
