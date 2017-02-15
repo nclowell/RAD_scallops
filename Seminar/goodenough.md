@@ -14,7 +14,7 @@ Wilson et al, 2016, [PLOS](https://arxiv.org/pdf/1609.00037.pdf)
 - Decompose programs into functions
 - Be ruthless about eliminating duplication
 - Give functions and variables meaningful names
-- Make dependencies an drequirements explicit
+- Make dependencies and rrequirements explicit
 - Do not comment and uncomment sections of code to control a program's behavior
 - Provide a simple example or test data set
 - Submit code to a reputable DOI-issuing repository
@@ -38,7 +38,7 @@ Wilson et al, 2016, [PLOS](https://arxiv.org/pdf/1609.00037.pdf)
 - Keep changes small
 - Share changes frequently
 - Create, maintain, and use a checklist for saving and sharing changes to the project
-- Store each project in a folder that is mirroried off the researcher's working machine
+- Store each project in a folder that is mirrored off the researcher's working machine
 
 #### Manuscripts
 - Either single master copy with rich text like Google Doc, or text-based doc under version control in LaTeX or Markdown, etc
