@@ -1,0 +1,14 @@
+## Good Enough Practices in Scientific Computing
+Wilson et al, 2016, PLOS
+
+### Data Management
+- Save the raw data
+- Create the data you wish to see in the world
+- Create analysis-friendly data
+- Record all the steps used to process the data
+- Anticipate the need to use multiple tables
+- Submit data to a reputable DOI-issuing repository so that others can access and cite it
+
+### Software
+- Place a brief explanatory comment at the start of every program
+- 
