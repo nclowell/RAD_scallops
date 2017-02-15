@@ -39,3 +39,6 @@ Wilson et al, 2016, [PLOS](https://arxiv.org/pdf/1609.00037.pdf)
 - Share changes frequently
 - Create, maintain, and use a checklist for saving and sharing changes to the project
 - Store each project in a folder that is mirroried off the researcher's working machine
+
+#### Manuscripts
+- Either single master copy with rich text like Google Doc, or text-based doc under version control in LaTeX or Markdown, etc
