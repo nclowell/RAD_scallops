@@ -14,10 +14,16 @@ lines = infile.readlines()
 numlines = len(lines)
 infile.close()
 
+print "\nYour text file has " + str(numlines) + " lines, and you want to extract lines " + str(sys.argv[2]) + " and write it to the file with name " + str(sys.argv[3])
+
 numtorem = sys.argv[2]
 
-keeplines = [int(numtorem):]
+keeplines = lines[int(numtorem):]
+
+keepstring = ""
+for line in keeplines:
+    keepstring += line + "\n"
 
 outfile = open(sys.argv[3], "w")
-outfile.write(keeplines)
+outfile.write(keepstring)
 outfile.close
