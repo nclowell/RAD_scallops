@@ -22,7 +22,7 @@ keeplines = lines[int(numtorem):]
 
 keepstring = ""
 for line in keeplines:
-    keepstring += line + "\n"
+    keepstring += line
 
 outfile = open(sys.argv[3], "w")
 outfile.write(keepstring)
