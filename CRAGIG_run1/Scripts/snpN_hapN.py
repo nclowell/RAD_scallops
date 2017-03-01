@@ -1,6 +1,5 @@
-# purpose of this program is to take a haplotypes file that comes out of Stacks populations
-# and make a dictionary. the key in each entry is the catalog ID, and the value is a list.
-# The list
+# PURPOSE: to plot the number of SNPs by number of haplotypes per locus
+# INPUT: haplotype.tsv file that comes out of ``populations``, as first and only command line argument
 
 import sys
 import matplotlib.pyplot as plt
@@ -47,8 +46,8 @@ for value in dict_list:
     snp_counts.append(snp_count)
 
 # plot results# plot with matplotlib pyplot
-plt.scatter(hap_counts,snp_counts) # multiple box plots with list of lists
-plt.xlabel('Number of haplotypes in a locus') # axis label
-plt.ylabel('Number of SNPs in a locus') # axis label
+plt.scatter(snp_counts,hap_counts) # multiple box plots with list of lists
+plt.xlabel('Number of SNPs in a locus') # axis label
+plt.ylabel('Number of haplotypes in a locus') # axis label
 plt.suptitle('Number of SNPs by number of haplotypes across individuals') # title
 plt.show() # show plot
