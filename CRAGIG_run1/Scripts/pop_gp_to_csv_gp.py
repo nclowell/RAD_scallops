@@ -53,4 +53,4 @@ for line in mylines[2:]:
 
 myarray = np.array(biglist) # write list of lists into numpy array
 t_array = myarray.transpose() # transpose array
-np.savetxt("transposed_genepop.csv", t_array, delimiter=",", fmt = "%s") # write array to CSV
+np.savetxt(args.outfile, t_array, delimiter=",", fmt = "%s") # write array to CSV
