@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 
 parser = argparse.ArgumentParser(description="Makes a boxplot per population showing the number of alleles per locus")
 parser.add_argument("-c", "--catalog", help="Catalog file from Stacks pipeline", type=str, required = True)
+parser.add_argument("-t", "--title", help="Title for your histogram", type=str, required=True)
 args = parser.parse_args()
 
 catalog = open(args.catalog, "r")
@@ -34,5 +35,5 @@ plt.hist(values_list, bins = range(0,100))
 plt.xlim([0,50])
 plt.xlabel('Number of alleles')
 plt.ylabel('Frequency of loci')
-plt.suptitle('Distribution of number of alleles per locus in scallop catalog')
+plt.suptitle(args.title)
 plt.show()
