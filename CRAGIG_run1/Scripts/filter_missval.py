@@ -12,10 +12,12 @@
 # - name for text file with lostloci
 # - threshold fraction setting boundary for filtering cutoff
 # -----------------------------------------------------------------------------
+from __future__ import division
 import sys
 import argparse
 import numpy as np
 from operator import itemgetter
+
 
 # manage args with argparse
 parser = argparse.ArgumentParser(description="Takes a populations genepop file from Stacks and reformats it to a CSV with sample names as column headers, and loci listed down column one, genoypes in cells, and the top left cell with the word 'sample'")
@@ -94,7 +96,9 @@ keptloci.close()
 lostloci.close()
 
 total_count = kept_count + lost_count
+retained_perc = kept_count/total_count
 
 # Report kept/lost to user
-print "This script filtered out " + str(lost_count) + " loci, out of a total of " + str(total_count) + " loci."
-print "Your keptloci file should have " + str(kept_count) + " loci, and your lostloci file should have " + str(lost_loci) + " loci."
+print "\nThis script filtered out " + str(lost_count) + " loci, out of a total of " + str(total_count) + " loci."
+print "\nYour keptloci file should have " + str(kept_count) + " loci, and your lostloci file should have " + str(lost_count) + " loci."
+print "\nYou retained " + str(retained_perc*100)[0:4] + "% of your loci after filtering for missing values."
