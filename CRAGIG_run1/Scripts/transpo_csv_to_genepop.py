@@ -2,6 +2,8 @@
 # PURPOSE: convert a transposed genepop CSV file to genepop format
 # INPUTS: managed by argparse below, include:
 # - transposed genepop CSV to convert to regular genepop
+# - popmap from stacks
+# - name for reformatted genepop file
 # OUTPUT: Genepop file
 # -----------------------------------------------------------------------------
 
@@ -40,7 +42,13 @@ for line in popmap:
 	all_popnames.append(popname)
 	sampnames.append(sampname)
 samp_array = np.array(sampnames)
-unique_pops = list(set(all_popnames))
+
+def ord_unique_set(list): # get ordered unique set of populations, to keep order in original genepop
+    seen = set()
+    seen_add = seen.add
+    return [x for x in list if not (x in seen or seen_add(x))]
+
+unique_pops = ord_unique_set(all_popnames)
 
 # make dictionary where keys are populations and values are sample names in each population
 for pop in unique_pops:
@@ -95,14 +103,3 @@ for i in range(0,numpops):
             substr += "\t" + genotype
         outfile.write(substr + "\n")
 outfile.close()
-
-
-
-
-
-
-
-# t_array = transposed array
-
-
-# get lines with these indeces from array, write in loop separated by "pop"
