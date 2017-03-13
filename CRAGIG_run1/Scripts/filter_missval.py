@@ -1,7 +1,7 @@
 # 20170313 Natalie Lowell
-# based on Eleni's script for filtering missing values, but restructured to use the population map
-# to pull out what samples are in each population, and then using these indeces to iterate
-# over populations and filter out any loci where missing value frequency goes above the cutoff in
+# This script is based on Eleni's script for filtering missing values, but restructured to use the population map
+# to pull out what samples are in each population, and then getting and using these indeces in the transposed genepop file
+# to iterate over populations and filter out any loci where missing value frequency goes above the cutoff in
 # any population
 
 # PURPOSE: filter transposed genepop file for missing values using a threshold, often .5
@@ -23,7 +23,7 @@ parser.add_argument("-g", "--genfile", help="Genotypes file, CSV transposed gene
 parser.add_argument("-p", "--popmap", help="Population map used in Stacks populations", type=str, required=True)
 parser.add_argument("-k", "--keptloci", help="Output file with kept loci, CSV", type=str, required = True)
 parser.add_argument("-l", "--lostloci", help="Output file with lost loci, CSV", type=str, required = True)
-parser.add_argument("-t", "--threshold", help="Threshold cutoff for missing data, e.g., .5 for less than 50 percent missing data", type=int, required = True)
+parser.add_argument("-t", "--threshold", help="Threshold cutoff for missing data, e.g., .5 for less than 50 percent missing data", type=float, required = True)
 args = parser.parse_args()
 
 # get col indeces for each pop, by first getting unique pop name
@@ -68,6 +68,8 @@ genfile_lines = genfile.readlines()
 genotype_lines = genfile_lines[1:] # skip first line to get to exclude header
 
 numpop_range = range(0,len(unique_popnames)) # make list to iterate over within loop, prior to loop
+kept_count = 0
+lost_count = 0
 for locus_row in genotype_lines:
 	stripped_row = locus_row.strip()
 	missdata_freq_list = [] # initiate list that will store frequency of missing data by population within a locus
@@ -82,10 +84,17 @@ for locus_row in genotype_lines:
 		missdata_freq_list.append(percent_miss_data_thispop)
 	if all(x < args.threshold for x in missdata_freq_list):
 		keptloci.write(locus_row)
+		kept_count += 1
 	else:
 		lostloci.write(locus_row)
-
+		lost_count += 1
 # Close files
 genfile.close()
 keptloci.close()
 lostloci.close()
+
+total_count = kept_count + lost_count
+
+# Report kept/lost to user
+print "This script filtered out " + str(lost_count) + " loci, out of a total of " + str(total_count) + " loci."
+print "Your keptloci file should have " + str(kept_count) + " loci, and your lostloci file should have " + str(lost_loci) + " loci."
