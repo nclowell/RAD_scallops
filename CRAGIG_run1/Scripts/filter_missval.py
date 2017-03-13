@@ -72,11 +72,7 @@ genotype_lines = genfile_lines[1:] # skip first line to get to exclude header
 numpop_range = range(0,len(unique_popnames)) # make list to iterate over within loop, prior to loop
 kept_count = 0
 lost_count = 0
-progresscount = 0
-biglist = []
 for locus_row in genotype_lines:
-	progresscount += 1
-	print progresscount
 	stripped_row = locus_row.strip()
 	split_row = stripped_row.split(",")
 	row_array = np.array(split_row)
@@ -94,13 +90,6 @@ for locus_row in genotype_lines:
 	else:
 		lostloci.write(locus_row)
 		lost_count += 1
-
-newfile = open("CHECK.txt", "w")
-for littlelist in biglist:
-	newfile.write(str(littlelist) + "\n")
-newfile.close()
-
-
 
 # Close files
 genfile.close()
