@@ -83,7 +83,6 @@ for locus_row in genotype_lines:
 		num_ind_thispop = float(len(pop_genotypes))
 		percent_miss_data_thispop = float(miss_gen_by_locus/num_ind_thispop)
 		missdata_freq_list.append(percent_miss_data_thispop)
-	biglist.append(missdata_freq_list)
 	if all(x < args.threshold for x in missdata_freq_list):
 		keptloci.write(locus_row)
 		kept_count += 1
