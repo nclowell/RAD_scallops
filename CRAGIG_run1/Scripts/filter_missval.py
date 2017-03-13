@@ -20,7 +20,7 @@ from operator import itemgetter
 
 
 # manage args with argparse
-parser = argparse.ArgumentParser(description="Takes a populations genepop file from Stacks and reformats it to a CSV with sample names as column headers, and loci listed down column one, genoypes in cells, and the top left cell with the word 'sample'")
+parser = argparse.ArgumentParser(description="Filters out loci where any one population had a missing value frequency at or above the designated threshold")
 parser.add_argument("-g", "--genfile", help="Genotypes file, CSV transposed genepop file", type=str, required = True)
 parser.add_argument("-p", "--popmap", help="Population map used in Stacks populations", type=str, required=True)
 parser.add_argument("-k", "--keptloci", help="Output file with kept loci, CSV", type=str, required = True)
