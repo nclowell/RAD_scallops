@@ -20,7 +20,7 @@ from operator import itemgetter
 
 
 # manage args with argparse
-parser = argparse.ArgumentParser(description="Filters out loci where any one population had a missing value frequency at or above the designated threshold")
+parser = argparse.ArgumentParser(description="Takes a populations genepop file from Stacks and reformats it to a CSV with sample names as column headers, and loci listed down column one, genoypes in cells, and the top left cell with the word 'sample'")
 parser.add_argument("-g", "--genfile", help="Genotypes file, CSV transposed genepop file", type=str, required = True)
 parser.add_argument("-p", "--popmap", help="Population map used in Stacks populations", type=str, required=True)
 parser.add_argument("-k", "--keptloci", help="Output file with kept loci, CSV", type=str, required = True)
@@ -72,24 +72,36 @@ genotype_lines = genfile_lines[1:] # skip first line to get to exclude header
 numpop_range = range(0,len(unique_popnames)) # make list to iterate over within loop, prior to loop
 kept_count = 0
 lost_count = 0
+progresscount = 0
+biglist = []
 for locus_row in genotype_lines:
+	progresscount += 1
+	print progresscount
 	stripped_row = locus_row.strip()
-	missdata_freq_list = [] # initiate list that will store frequency of missing data by population within a locus
 	split_row = stripped_row.split(",")
 	row_array = np.array(split_row)
+	missdata_freq_list = [] # initiate list that will store frequency of missing data by population within a locus
 	for population_num in numpop_range:
-		thispop = unique_popnames[int(population_num)]
 		pop_genotypes = list(row_array[header_indeces_list[population_num]])
 		miss_gen_by_locus = float(pop_genotypes.count("0000"))
-		num_ind_thispop = float(len(thispop))
+		num_ind_thispop = float(len(pop_genotypes))
 		percent_miss_data_thispop = float(miss_gen_by_locus/num_ind_thispop)
 		missdata_freq_list.append(percent_miss_data_thispop)
+	biglist.append(missdata_freq_list)
 	if all(x < args.threshold for x in missdata_freq_list):
 		keptloci.write(locus_row)
 		kept_count += 1
 	else:
 		lostloci.write(locus_row)
 		lost_count += 1
+
+newfile = open("CHECK.txt", "w")
+for littlelist in biglist:
+	newfile.write(str(littlelist) + "\n")
+newfile.close()
+
+
+
 # Close files
 genfile.close()
 keptloci.close()
