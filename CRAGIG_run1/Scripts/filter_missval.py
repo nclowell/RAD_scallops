@@ -84,10 +84,10 @@ for locus_row in genotype_lines:
 		percent_miss_data_thispop = float(miss_gen_by_locus/num_ind_thispop)
 		missdata_freq_list.append(percent_miss_data_thispop)
 	if all(x < args.threshold for x in missdata_freq_list):
-		keptloci.write(locus_row + "\n")
+		keptloci.write(locus_row)
 		kept_count += 1
 	else:
-		lostloci.write(locus_row + "\n")
+		lostloci.write(locus_row)
 		lost_count += 1
 
 # Close files
