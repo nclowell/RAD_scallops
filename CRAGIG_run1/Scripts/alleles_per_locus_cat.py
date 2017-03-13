@@ -28,7 +28,7 @@ for line in lines:
         dnary[tag] = newval
 
 values_list = dnary.values()
-print values_list[1:19]
+
 
 plt.hist(values_list, bins = range(0,100))
 plt.xlim([0,50])
