@@ -28,7 +28,7 @@ parser.add_argument("-p", "--threads", help="enable parallel execution with num_
 parser.add_argument("-b", "--batch", help="batch number", type=str, required=True)
 parser.add_argument("-s", "--samples", help="text file with names of each sample to include in cstacks on its own line and without file extension", type=str, required=True)
 parser.add_argument("-o", "--output", help="output path to write results", type=str, required=True)
-parser.add_argument("-n", "--mismatch", help="number of mismatches allowed between sample tags when generating the catalog", type=int, required=True)
+parser.add_argument("-n", "--mismatch", help="number of mismatches allowed between sample tags when generating the catalog; only use when running cstacks without a reference genome.", type=int, required=False)
 parser.add_argument("-i", "--input", help="relative path to directory with input sample files, required only if program file is not in directory with sample files", type=str)
 args = parser.parse_args()
 
