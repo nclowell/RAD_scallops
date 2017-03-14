@@ -28,13 +28,14 @@ parser.add_argument("-p", "--threads", help="enable parallel execution with num_
 parser.add_argument("-b", "--batch", help="batch number", type=str, required=True)
 parser.add_argument("-s", "--samples", help="text file with names of each sample to include in cstacks on its own line and without file extension", type=str, required=True)
 parser.add_argument("-o", "--output", help="output path to write results", type=str, required=True)
-parser.add_argument("-n", "--mismatch", help="number of mismatches allowed between sample tags when generating the catalog; only use when running cstacks without a reference genome.", type=int, required=False)
+parser.add_argument("-n", "--mismatch", help="number of mismatches allowed between sample tags when generating the catalog; only use when running cstacks without a reference genome.", type=str, required=False)
 parser.add_argument("-i", "--input", help="relative path to directory with input sample files, required only if program file is not in directory with sample files", type=str)
+parser.add_argument("-g", "--genome", help ="base catalog construction on alignment position, not sequence identity", action='store_true')
 args = parser.parse_args()
 
-# make lists of just inputs that will go directly into stacks with same flags - here, all but --samples
-stacksin = [args.threads, args.output, args.mismatch]
-stacksfl = ["-p", "-o", "-n"]
+# make lists of required inputs that will go directly into stacks with same flags - here, all but --samples
+stacksin = [args.threads, args.output]
+stacksfl = ["-p", "-o"]
 
 inc_d = {}
 exc_d = {}
@@ -49,6 +50,16 @@ for i in range(0,numpar):
 
 for i in inc_d:
     print i, inc_d[i]
+
+# optional argument string that will occur after samle list
+
+opt_str = ""
+if args.mismatch == None:
+	opt_str = opt_str
+else:
+	opt_str += " -n " + str(args.mismatch)
+if args.genome == True:
+	opt_str += " -g "
 
 # get sample names from text file in -s
 samples_file = open(args.samples, "r")
@@ -89,8 +100,9 @@ cstacks_shell = ""
 firststr = "stacks cstacks -b " + str(args.batch) + " "
 cstacks_shell += firststr
 sampstr = ""
+sampstr += opt_str
 for i in range(0,numsamples):
-	sampstr += "-s " + "Stacks/" + samples_for_use[i] + " "
+	sampstr += "-s " + args.input + "/" + samples_for_use[i] + " "
 cstacks_shell +=sampstr
 endstr = ""
 for key, value in inc_d.iteritems():
