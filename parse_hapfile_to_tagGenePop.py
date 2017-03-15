@@ -100,8 +100,6 @@ for i in range(0,num_rows_in_array):
                 tripcount += 1
                 num_genotype = "0000" # replacing genotype with more than two alleles as missing data
                 loop_array[i][x] = num_genotype
-loop_array = loop_array.transpose() #MAYBE NOT
-np.savetxt("LOOKATME.csv", loop_array, delimiter=",", fmt = "%s")
 
 # open file for writing output
 output = open(args.output, "w")
