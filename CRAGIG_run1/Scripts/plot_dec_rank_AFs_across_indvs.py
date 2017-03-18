@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 parser = argparse.ArgumentParser(description="Takes a set of samples, calls individual alleles files, and plots rank decreasing order of allele frequencies for sets of genotypes according to number of alleles within a genotype.")
 parser.add_argument("-s", "--samples", help="Text file with name of the samples to include, excluding any filepaths", type=str, required = True)
 parser.add_argument("-i", "--indir", help="Path to directory with individual alleles files", type=str, required=True)
-parser.add_argument("-n", "--numalls", help="Largest number of alleles you are interested in investigated, e.g., genotypes with 5 alleles in an individual.10 is hightest number.", type=int, required=True)
+parser.add_argument("-n", "--numalls", help="Largest number of alleles you are interested in investigated, e.g., genotypes with 5 alleles in an individual. 10 is hightest number.", type=int, required=True)
 parser.add_argument("-o", "--outfile", help="Directory to store plots.", type=str, required=True)
 args = parser.parse_args()
 
