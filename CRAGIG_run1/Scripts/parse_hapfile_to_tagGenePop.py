@@ -159,8 +159,6 @@ for pop in unique_pops:
     samples.sort()
     popindex = unique_pops.index(pop)
     popgenrows = loop_array[index_list[popindex]]
-    print popgenrows.shape[0]
-    print popgenrows.shape[1]
     substring = ""
     for i in range(0,len(popgenrows)):
         row = popgenrows[i]
