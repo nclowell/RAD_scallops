@@ -1,19 +1,16 @@
-# EASY CSTACKS
-# 20170203 NL
-#
-# purpose: to produce and run a shell script for cstacks; cstacks builds a catalog of loci that you use to genotype your individuals
-#
-# inputs via argparse:
-# -p --threads = num threads
-# -b --batch = batch number
-# -s --samples = text file with sample names each on own line, without file extension
-# -o --output = directory for output files
-# -m --match = include tags in the catalog that match to more than one entry
-# -n --mismatch = number of mismatches allowed between sample tags when generating the catalog
-#
-# outputs: catalog file you can use to genotype individuals
-#
-# dependencies: your working directory is one level above the directory with your samples for cstacks; order of flagged inputs doesn't matter
+############################### EASY CSTACKS ###################################
+# 20170203 Natalie Lowell
+# PURPOSE: to produce and run a shell script for cstacks; cstacks builds a catalog of loci that you use to genotype your individuals
+# INPUT: managed with argparse, includes:
+# -num threads
+# -batch number
+# -text file with sample names each on own line, without file extension
+# -directory for output files
+# -include tags in the catalog that match to more than one entry
+# -number of mismatches allowed between sample tags when generating the catalog
+# -whether to base catalog construction on alignment position and not sequence identity
+# OUTPUT: catalog file you can use to genotype individuals
+# ASSUMPTIONS: your working directory is one level above the directory with your samples for cstacks; order of flagged inputs doesn't matter
 # -----------------------------------------------------------------------------
 
 # import modules

@@ -40,11 +40,4 @@ The script uses a grep command, counting every time the word "consensus" appears
 
 ![image](https://github.com/nclowell/RAD_Scallops/blob/master/Seminar/images_for_notebook/pyplot_fig.png?raw=true)
 
-
-
-
-
-
-
-
 **20170323 Natalie Lowell**
