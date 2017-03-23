@@ -1,18 +1,23 @@
-##########################################################################################
-### ``easy ustacks``
-#
+################################# EASY USTACKS #################################
 # 20170212 NL
+# PURPOSE: write and execute a bash script to run ustacks, then count and plot retained loci after ustacks
+# INPUT: managed by argparse below, includes:
+# - file type
+# -input directory
+# - removal algorithm
+# - develeraging algorithm
+# - output directory
+# - min depth
+# - max distance
+# - num threads
+# - start ID
+# - samples
+# - name for counts file
+# - pop map with only samples in this ustacks run
 #
-# purpose of ``easy ustacks``: writes a bash script to run ustacks, executes bash script, counts retained loci after ustacks, plots retained loci
-# purpose of ustacks: align sequences to matching stacks within an individual to form set of loci and detect SNPs
-#
-# inputs via argparse: file type, input directory, removal algorithm, develeraging algorithm,
-#						output directory, min depth, max distance, num threads, start ID, samples
-#						name for counts file, pop map with only samples in this ustacks run
-#
-# outputs: tags, SNPs, and alleles files per sample and plot of retained loci per individual per population
-#
-# assumptions: pop map only includes the samples you want to run ustacks on
+# OUTPUT:
+# tags, SNPs, and alleles files per sample and plot of retained loci per individual per population, plot of retained loci per population
+# ASSUMPTIONS: pop map only includes the samples you want to run ustacks on
 #
 ##########################################################################################
 
@@ -46,6 +51,17 @@ stacksfl = ["-t", "-o", "-m", "-M", "-p"]
 jflags_args = [args.removal, args.delever]
 jflags = ["-r","-d"]
 
+# get filetype extension
+extension = ""
+if args.type == "fastq":
+	extension += ".fq"
+elif args.type == "gzfastq":
+	extension += ".fq.gz"
+elif args.type == "fasta":
+	extension += ".fa"
+elif args.type == "gzfasta":
+	extension += ".fa.gz"
+
 #  build a dictionary to store parameter inputs for those used here
 inc_d = {} # initiate dictionary of included arguments
 exc_d = {} # initatie dictionary to store excluded arguments
@@ -73,8 +89,6 @@ for i in range(0,numjflags):
 string_flags = ""
 for item in jflags_inc:
 	string_flags += item + " "
-print string_flags
-
 
 # get list of population labels and list of samples in population map order
 populations = []
@@ -103,7 +117,7 @@ IDs = range(start_int,(start_int+numsamples))
 ustacks_shell_str = "" # initialize string to write as shell script
 for i in range(0,numsamples):
 	linestr = "stacks ustacks "
-	linestr += "-f " + args.inputdir + "/" + samples_in_poporder[i] + ".fq.gz" + " "
+	linestr += "-f " + args.inputdir + "/" + samples_in_poporder[i] + extension + " "
 	linestr += "-i " + str(IDs[i]) + " "
 	for key, value in inc_d.iteritems():
 		linestr += str(key) + " " + str(value) + " "
@@ -145,7 +159,7 @@ def timer(start,end):
 start = time.time() # get start time
 
 ### run the bash script
-# subprocess.call(["sh ustacks_shell.txt"], shell = True)
+subprocess.call(["sh ustacks_shell.txt"], shell = True)
 
 end = time.time() # get end time
 
@@ -200,7 +214,6 @@ else:
 	print "The length of your population, counts, and samples lists are not equal. Check your code and files. Program will quit."
 	sys.exit()
 
-
 # get list of list where each sublist is a unique pop with list of counts
 data_array = []
 
@@ -214,7 +227,7 @@ for pop in set_pops:
 		matches.append(counts[i]) # get counts with those matching indeces and put in list
 	data_array.append(matches) # append list within bigger list for plotting
 
-# plot with matplotlib pyplot
+# plot
 plt.boxplot(data_array) # multiple box plots with list of lists
 plt.xticks(range(1,num_set_pops+1),set_pops) # label x axis with population names
 plt.ylabel('Number of loci retained per individual') # axis label
