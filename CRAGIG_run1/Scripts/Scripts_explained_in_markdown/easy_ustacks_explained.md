@@ -37,6 +37,7 @@ For inputs that are just flags (e.g., ``-d``), a short loop  builds a string bas
 The script uses a grep command, counting every time the word "consensus" appears in the individual tags.tsv files produced by ``ustacks``, as these denote unique loci and writes them to a file. The file is called back in, parsed, and plotted by population. X axis labels are population names from your population map.
 
 **Example plot:**
+
 ![image](https://github.com/nclowell/RAD_Scallops/blob/master/Seminar/images_for_notebook/pyplot_fig.png?raw=true)
 
 
