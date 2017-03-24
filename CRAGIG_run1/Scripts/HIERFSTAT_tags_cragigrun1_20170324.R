@@ -52,5 +52,5 @@ my_stats$Fis
 
 # Write any ofthese stats out to a text file so you can see what the fuck you are doing
 write.table(my_stats$Hs, "my_Hs.txt", sep="\t")
-write.table(my_stats$Fis, "my_Fis.txt", sep="\t")
+write.table(my_stats$Fis, "my_Fis_tags_20170324.txt", sep="\t")
 write.table(basic.stats(my_data)$n.ind.samp, "Genotype_counts.txt", sep="\t")
