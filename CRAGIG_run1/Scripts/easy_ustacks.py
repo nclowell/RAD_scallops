@@ -204,14 +204,15 @@ for line in lines:
 countresults.close()
 
 # verify length of populations, counts, and samples all same length; otherwise something's wrong
-length1 = len(populations)
 length2 = len(samples_in_poporder)
 length3 = len(counts)
 
-if length1 == length2 == length3:
-	print "Number of populations, counts, and samples equal. Continuing to plot."
+if length2 == length3:
+	print "Continuing to plot."
 else:
-	print "The length of your population, counts, and samples lists are not equal. Check your code and files. Program will quit."
+	print "There was a mismatch between the number of tags files counted, and the number of tags files produced by ustacks. Check your code and files, and double-check that counts aren't appending to an existing file. Program will quit."
+	print "samples in popmap order list length: " + str(length2)
+	print "count list length: " + str(length3)
 	sys.exit()
 
 # get list of list where each sublist is a unique pop with list of counts
