@@ -51,6 +51,6 @@ test_a_score <- optim.a.score(dapc_all) # this also gives you optimal number of 
 dapc_all <- dapc(data_all_loci,data_all_loci$pop,n.pca=22,n.da=4) ##22 PC's is the optimal number
 
 #2D plot
-scatter(dapc_all,scree.da=FALSE,cellipse=0,leg=FALSE,label=c("WA1", "WA2","WA3","AK1","CA1"),
+scatter(dapc_all,scree.da=FALSE,cellipse=0,leg=FALSE,label=c("WA_Strait", "WA_SanJuans","WA_Dabob","AK","CA_Catalina"),
         posi.da="bottomleft",csub=2,col=pop_cols,cex=1.5,clabel=1,pch=c(18,15,15,16,16),solid=1)
-legend(x = -7, y = 2,bty='n',legend=c("WA1", "WA2","WA3","AK1","CA1"),pch=c(18,15,15,16,16),col=pop_cols,cex=1.3)
+# legend(x = -7, y = 2,bty='n',legend=c("WA_Strait", "WA_SanJuans","WA_Dabob","AK","CA_Catalina"),pch=c(18,15,15,16,16),col=pop_cols,cex=1.3)
