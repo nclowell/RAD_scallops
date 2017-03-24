@@ -17,7 +17,7 @@ setwd("C:/Users/Natalie Lowell/Desktop")
 # Read in your data as a genepop file, with a ".gen" file extension
 # Need comma after each individual, can be space or tab delimited
 # Specify how many characters code each allele with ncode
-my_data <-read.genepop("tags_gp_fMV_sansreps_20170324_take2.gen", ncode = 2)
+my_data <-read.genepop("postMAF_postMV_asGP_20170322.gen", ncode = 2)
 
 # To retreive useful data summaries
 (summary(my_data))
@@ -52,5 +52,5 @@ my_stats$Fis
 
 # Write any ofthese stats out to a text file so you can see what the fuck you are doing
 write.table(my_stats$Hs, "my_Hs.txt", sep="\t")
-write.table(my_stats$Fis, "my_Fis_tags_20170324.txt", sep="\t")
+write.table(my_stats$Fis, "my_Fis_snps_20170324.txt", sep="\t")
 write.table(basic.stats(my_data)$n.ind.samp, "Genotype_counts.txt", sep="\t")
