@@ -33,7 +33,7 @@ pop_cols <- c("black","dodgerblue","tomato","deepskyblue","red")
 # Data exploration to find # PCs. Go through all of their prompts:
 dapc_all <- dapc(data_all_loci,data_all_loci$pop)
 
-# [1] Choose the number PCs to retain (>=1):
+22# [1] Choose the number PCs to retain (>=1):
 #     You will see a plot of cumulative variance by number retained PCs
 #     Retain N/3 Prinicpal components
 #     E.g., if x axis goes until 70, retain 7-/3 = 23.333 = 23
