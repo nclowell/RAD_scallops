@@ -20,6 +20,7 @@ import sys
 import argparse
 import subprocess
 import time
+import matplotlib.pyplot as plt
 
 # organize parameter inputs with argparse
 parser = argparse.ArgumentParser(description="Write and call a pstacks shell script, and plot results")
