@@ -1,21 +1,17 @@
-# EASY SSTACKS
-# 20170208
-#
+################################## EASY SSTACKS ################################
+# 20170328 NL
 # PURPOSE: To write and execute a shell script to run sstacks; sstacks matches individual samples against your catalog for genotyping
 # INPUT VIA ARGPARSE:
-#
-# -p --threads "enable parallel execution with num_threads threads"
-# -b --batch "batch number"
-# -s --samples "text file with names of each sample to include in sstacks on its own line and without file extension"
-# -o --output "output path to write results, e.g., 'Stacks/'"
-# -c -- catalog "catalog file for sstacks to use for genotyping individuals, e.g., 'batch_1'"
-# -d --dir "relative path to directory with sample files, e.g., 'Stacks/''"
-#
+# - threads "enable parallel execution with num_threads threads"
+# - batch "batch number"
+# - samples "text file with names of each sample to include in sstacks on its own line and without file extension"
+# - output "output path to write results, e.g., 'Stacks/'"
+# - catalog "catalog file for sstacks to use for genotyping individuals, e.g., 'batch_1'"
+# - relative path to directory with sample files, e.g., 'Stacks/''"
+# - whether base matching should be based on alignment position over sequence identity
 # OUTPUT: match files
-#
-#
-#
-##########################################################################################
+# ASSUMPTIONS: only allows Stacks sstacks options: -b, -p, -M, -c, -g, -p, and -o
+################################################################################
 
 # import modules
 import sys
@@ -27,6 +23,7 @@ import argparse
 parser = argparse.ArgumentParser(description="Write and call a sstacks shell script")
 parser.add_argument("-p", "--threads", help="enable parallel execution with num_threads threads", type=int)
 parser.add_argument("-b", "--batch", help="batch number", type=int, required=True)
+parser.add_argument("-g", "--aligned", help="base matching on alignment position and not sequence identity", action='store_true')
 parser.add_argument("-s", "--samples", help="text file with names of each sample to include in sstacks on its own line and without file extension", type=str, required=True)
 parser.add_argument("-o", "--output", help="output path to write results, e.g., 'Stacks/'", type=str, required=True)
 parser.add_argument("-c", "--catalog", help="catalog file for sstacks to use for genotyping individuals, e.g., 'batch_1'", type=str, required=True)
@@ -53,7 +50,7 @@ def simple_getinput(prompt, YES_string, NO_string, else_string):
 		print else_string
 		simple_getinput(prompt, YES_string, NO_string, else_string)
 
-# verify to user that you have the right number of samples
+# verify to user that you have the right number of samples using above function
 numsamples = len(names)
 
 print "\nYou are working with " + str(numsamples) + " samples."
@@ -64,9 +61,19 @@ NO_string = "\nRuh-roh. Something's wrong. Check your files and verify they matc
 else_string = "\nYour answer is not a valid input. Only YES and NO are valid inputs."
 simple_getinput(prompt, YES_string, NO_string, else_string)
 
-# make dictionaries to organize args inputs for shell scripting
+### organize arguments and inputs for bash script
+# [1] flags with values, organizied into a dictionary, then loop to make string
+# [2] just flags, into string
 
-# make lists of just inputs that will go directly into stacks with same flags - here, all but --samples
+# [1]
+jflags = ""
+if args.aligned == True:
+	jflags += "-g "
+
+# [2]
+
+# make lists of arguments with matching flags to Stacks
+# the loop will go through these lists and see which you included at the command line
 stacksin = [args.threads, args.output, args.catalog]
 stacksfl = ["-p", "-o", "-c"]
 
@@ -87,7 +94,7 @@ shellstring = ""
 
 # write sstacks shell script - supposed to look something like stacks sstacks -b 3 -c stacks_b3/batch_3 -s stacks_b3/2005_297_1 -p 10 -o Stacks
 for i in range(0,numsamples):
-	firststring = "stacks sstacks -g -b " + str(args.batch) + " " + "-s " + args.dir + "/" + str(names[i]) + " "
+	firststring = "stacks sstacks " + jflags + "-b " + str(args.batch) + " " + "-s " + args.dir + "/" + str(names[i]) + " "
 	secondstring = ""
 	for key, value in inc_d.iteritems():
 		secondstring += str(key) + " " + str(value) + " "
@@ -118,6 +125,6 @@ start = start_time = time.time()
 subprocess.call(["sh sstacks_shell.txt"], shell=True)
 
 end = time.time()
+print "\nRunning sstacks took:" # report time to run sstacks
 timer(start,end)
-
-#end
+###############################################################################
