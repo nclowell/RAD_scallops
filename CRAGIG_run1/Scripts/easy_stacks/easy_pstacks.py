@@ -13,7 +13,7 @@
 # - pop map with only samples in this pstacks run
 #
 # OUTPUT: tags, SNPs, and alleles files per sample and plot of retained loci per individual per population, plot of retained loci per population
-# ASSUMPTIONS: population map only includes the samples you want to run pstacks on,
+# ASSUMPTIONS: population map only includes the samples you want to run pstacks on, only allows SAM and BAM alignments
 ##########################################################################################
 
 import sys
