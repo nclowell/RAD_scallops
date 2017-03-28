@@ -72,7 +72,6 @@ if args.aligned == True:
 	jflags += "-g "
 
 # [2]
-
 # make lists of arguments with matching flags to Stacks
 # the loop will go through these lists and see which you included at the command line
 stacksin = [args.threads, args.output, args.catalog]

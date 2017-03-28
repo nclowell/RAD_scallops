@@ -211,9 +211,4 @@ plt.xticks(range(1,num_set_pops+1),set_pops) # label x axis with population name
 plt.ylabel('Number of loci retained per individual') # axis label
 plt.suptitle('Retained loci by population after pstacks') # title
 plt.show() # show plot
-
 ################################################################################
-
-
-
-###############################################################################
