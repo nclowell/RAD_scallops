@@ -24,7 +24,7 @@ parser = argparse.ArgumentParser(description="Write and call a sstacks shell scr
 parser.add_argument("-p", "--threads", help="enable parallel execution with num_threads threads", type=int)
 parser.add_argument("-b", "--batch", help="batch number", type=int, required=True)
 parser.add_argument("-g", "--aligned", help="base matching on alignment position and not sequence identity", action='store_true')
-parser.add_argument("-s", "--samples", help="text file with names of each sample to include in sstacks on its own line and without file extension", type=str, required=True)
+parser.add_argument("-P", "--popmap", help="population map, with only the samples you want to run sstacks on", type=str, required=True)
 parser.add_argument("-o", "--output", help="output path to write results, e.g., 'Stacks/'", type=str, required=True)
 parser.add_argument("-c", "--catalog", help="catalog file for sstacks to use for genotyping individuals, e.g., 'batch_1'", type=str, required=True)
 parser.add_argument("-d", "--dir", help="relative path to directory with sample files, e.g., 'Stacks/' or 'pstacks/'", type=str, required=True)
@@ -32,9 +32,10 @@ args = parser.parse_args()
 
 # get sample names
 names = [] # initiate list
-samples = open(args.samples, "r") # open file w filenames
+samples = open(args.popmap, "r") # open file w filenames
 for line in samples:
-	name = line.strip()
+	linelist = line.strip().split()
+	name =linelist[0]
 	names.append(name)
 print names # CHECK^
 samples.close()
@@ -92,7 +93,7 @@ for i in range(0,numpar): # sort each arg and its parameter into the appropriate
 shellfile = open("sstacks_shell.txt", "w") # create new file for shell script
 shellstring = ""
 
-# write sstacks shell script - supposed to look something like stacks sstacks -b 3 -c stacks_b3/batch_3 -s stacks_b3/2005_297_1 -p 10 -o Stacks
+# write sstacks shell script, example line: "stacks sstacks -b 3 -c stacks_b3/batch_3 -s stacks_b3/2005_297_1 -p 10 -o Stacks"
 for i in range(0,numsamples):
 	firststring = "stacks sstacks " + jflags + "-b " + str(args.batch) + " " + "-s " + args.dir + "/" + str(names[i]) + " "
 	secondstring = ""
