@@ -1,4 +1,4 @@
-# Purpose: getting Fis per locus
+# Purpose: getting Fis and heterozygosity per locus
 #
 # 20170426
 # Notice the input file is kind of bananas because... I removed the "pop"s from the Genepop file, other than the first, so that hierfstat
@@ -20,7 +20,7 @@ setwd("C:/Users/Natalie Lowell/Desktop")
 # Read in your data as a genepop file, with a ".gen" file extension
 # Need comma after each individual, can be space or tab delimited
 # Specify how many characters code each allele with ncode
-my_data <-read.genepop("tags_gp_fMV_sansreps_onepoptwice_20170420.gen", ncode = 2)
+my_data <-read.genepop("SNP_GP_oneSNPperRADtag_asONEPOP_20170426.gen", ncode = 2)
 
 # To retreive useful data summaries
 (summary(my_data))
@@ -54,6 +54,6 @@ basic.stats(my_data)$n.ind.samp
 my_stats$Fis
 
 # Write any ofthese stats out to a text file so you can see what the fuck you are doing
-write.table(my_stats$Hs, "my_Hs.txt", sep="\t")
-write.table(my_stats$Fis, "Fis_tags_onepop_20170420.txt", sep="\t")
+write.table(my_stats$Hs, "Hs_SNPs_onepop_oneSNPpertag_20170426.txt", sep="\t")
+write.table(my_stats$Fis, "Fis_SNPs_onepop_oneSNPpertag_20170426.txt", sep="\t")
 Fwrite.table(basic.stats(my_data)$n.ind.samp, "Genotype_counts.txt", sep="\t")
