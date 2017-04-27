@@ -54,6 +54,7 @@ basic.stats(my_data)$n.ind.samp
 my_stats$Fis
 
 # Write any ofthese stats out to a text file so you can see what the fuck you are doing
-write.table(my_stats$Hs, "Hs_SNPs_onepop_oneSNPpertag_20170426.txt", sep="\t")
+write.table(my_stats$Hs, "Hs_SNPs_onepop_oneSNPpertag_20170426.txt", sep="\t") # expected
+write.table(my_stats$Ho, "Ho_SNPs_onepop_oneSNPpertag_20170426.txt", sep="\t") # observed
 write.table(my_stats$Fis, "Fis_SNPs_onepop_oneSNPpertag_20170426.txt", sep="\t")
 Fwrite.table(basic.stats(my_data)$n.ind.samp, "Genotype_counts.txt", sep="\t")
