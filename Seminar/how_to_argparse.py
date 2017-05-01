@@ -38,7 +38,7 @@ if args.muahaha == True:
     endstring += " Muahaha!"
 
 # Assemble sentence and print
-sentence = "The " + args.adjective + " " + args.noun + " will " + args.verb + args.punctuation + endstring
+sentence = "The " + args.adjective + " " + args.noun + " will " + args.verb + punctuation + endstring
 print sentence
 
 # Calculate result and print
