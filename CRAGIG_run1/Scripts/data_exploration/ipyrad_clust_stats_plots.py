@@ -3,10 +3,12 @@
 #
 # PURPOSE: to produce plots exploring output in _clusteR_stats.txt files from ipyrad
 # INPUTS: managed by argparse,
-#
-#
-#
-#
+# -a assembly name
+# -i clust stats ipyrad output file
+# -o relative path to directory to store output plot files
+# -x flag if want plot of total number of clusters vs number of clusters filtered for depth
+# -y average depth with majority rule vs number of clusters filtered for depth
+# -z standard deviation of read depth with majority rule vs number of clusters filtered for depth
 # OUTPUTS: plots, depending on which ones you specified
 # ASSUMPTIONS: the directory structure is that provided by ipyrad
 ################################################################################
