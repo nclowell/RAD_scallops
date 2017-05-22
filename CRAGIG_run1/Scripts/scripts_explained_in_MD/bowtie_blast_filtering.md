@@ -5,7 +5,7 @@
 Our lab uses additional screening steps to remove loci from repetitive regions and potentially paralogous loci from our catalogs we produce in ``cstacks``. These should not be included in our population genomics analyses, and are often not filtered out in the ``Stacks`` pipeline. So, we use ``bowtie`` and ``BLAST`` to filter these out.
 
 
-Use ``bowtie2`` if you your data is above 50 bp or if your data has indels. Click [here](http://bowtie-bio.sourceforge.net/manual.shtml#the--v-alignment-mode) for the ``bowtie`` manual and [here](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) for the ``bowtie2`` manual. The parsing script below works on both ``bowtie`` and ``bowtie2`` SAM output files, although there are some differences between the two worth nothing (e.g., no mismatch parameter ``-v`` in ``bowtie2``).
+Use ``bowtie2`` if you your data is above 50 bp or if your data has indels. Click [here](http://bowtie-bio.sourceforge.net/manual.shtml#the--v-alignment-mode) for the ``bowtie`` manual and [here](http://bowtie-bio.sourceforge.net/bowtie2/manual.shtml) for the ``bowtie2`` manual. The parsing script below works on both ``bowtie`` and ``bowtie2`` SAM output files, although there are some differences between the two worth noting (e.g., no mismatch parameter ``-v`` in ``bowtie2``).
 
 To install ``BLAST``, follow the [instructions on their website](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PAGE_TYPE=BlastDocs&DOC_TYPE=Download). Click [here](https://www.ncbi.nlm.nih.gov/books/NBK279688/) for the ``BLAST`` manual.
 <br>
