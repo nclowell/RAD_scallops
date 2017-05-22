@@ -149,4 +149,4 @@ $	./bowtie-build batch_3_BowtieBlastFiltered_GOOD.fa batch_3_final_index
 
 <br>
 <br>
-20161211NL
+20170522 Natalie Lowell
