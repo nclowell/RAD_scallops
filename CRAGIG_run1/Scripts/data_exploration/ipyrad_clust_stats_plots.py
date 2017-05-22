@@ -91,6 +91,6 @@ if args.z == True:
     plt.scatter(sd_depth_mj_list, clusters_hidepth_list)
     plt.xlabel("Standard deviation of read depth with majority rule")
     plt.ylabel("Number of clusters after filtering")
-    plt.suptitle("Standard deviation of read depth with majority rule v. number filtered clusters")
+    plt.suptitle("Standard deviation of read depth with majority rule \nv. number filtered clusters")
     plt.savefig(outdir + 'sd_rd_mj_v_filt_clusts_' + today + '.png')
     plt.close()
