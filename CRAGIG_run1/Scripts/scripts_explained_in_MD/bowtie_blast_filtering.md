@@ -59,7 +59,7 @@ batch_3_BOWTIEout.sam
 ```
 
 
-##### [4] Filtering out repetitive loci with custom script
+##### [4] Parse output
 
 Lastly, parse the ``bowtie`` output file using this [script](https://github.com/nclowell/RAD_Scallops/blob/master/CRAGIG_run1/Scripts/filtering/parse_bowtie_output.py). It will filter out any loci that matched to any sequences other than itself.
 
@@ -80,7 +80,7 @@ $ python parse_bowtie_output.py \
 
 Similar to our ``bowtie`` filtering, we ``BLAST`` a database made of our catalog against itself and throw anything out that matches to more than itself.
 
-##### [1] Make a ``BLAST`` database using ``bowtie``-filtered file
+##### [1] Make a ``BLAST`` database using ``bowtie``-filtered fasta file
 
 Use the ``makeblastdb`` command to make a database from your catalog. The command line arguments are [i] your -in paramter for input file, which is the ``bowtie``-filtered fasta you are using to make your database, [ii] the -parse_seqids flag, which allows you to retrieve sequences using the sequence identifiers, [iii] the -dbtype parameter for database type, which here is nucleotide, and [iv] the -out paramter for output filename for your ``bowtie``-filtered database.
 
@@ -107,7 +107,7 @@ $	blastn -query batch_3_BOWTIEout_filtered.fa \
 -out batch_3_BowtieBlastFiltered
 ```
 
-##### [3] Filtering out repetitive loci with custom script
+##### [3] Parse output
 
 Lastly, you will use Dan's custom [script](https://github.com/nclowell/FISH546/blob/master/Cod-Time-Series-Project/Scripts/checkBlastResults_DD.py) for parsing out the repetitive loci. The command line arguments for this script are [i] the ``BLAST`` input file, [ii] the ``bowtie``-filtered fasta file, [iii] output filename for storing "good" data, and [iv] output filename for storing "bad" data.
 
