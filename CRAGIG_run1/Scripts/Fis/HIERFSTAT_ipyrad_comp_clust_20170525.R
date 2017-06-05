@@ -15,11 +15,11 @@ library(hierfstat)
 setwd("C:/Users/Natalie Lowell/SHARED_FOLDER/Learn_iPyrad/CRAGIG_RUN1_py")
 
 # Read in structure file, with a ".str" file extension
-my_data <-read.structure("Edited_outfiles", 
+my_data <-read.structure("Edited_outfiles/cragig006_biall_spid.str", 
                            onerowperind = FALSE,
                            col.pop = 2,
                            n.ind = 10,
-                           n.loc = 28922,
+                           n.loc = 29057,
                            col.lab = 1,
                            NA.char = "-9",
                            ask = FALSE)
@@ -57,5 +57,5 @@ my_stats$Fis
 
 # Write any ofthese stats out to a text file so you can see what the fuck you are doing
 write.table(my_stats$Hs, "my_Hs.txt", sep="\t")
-write.table(my_stats$Fis, "Fis_onepop_20170524.txt", sep="\t")
+write.table(my_stats$Fis, "Fis_cragig006_20170531.txt", sep="\t")
 Fwrite.table(basic.stats(my_data)$n.ind.samp, "Genotype_counts.txt", sep="\t")
