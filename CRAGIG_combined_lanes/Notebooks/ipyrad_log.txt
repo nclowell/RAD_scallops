@@ -1,8 +1,0 @@
-
- -------------------------------------------------------------
-  ipyrad [v.0.6.20]
-  Interactive assembly and analysis of RAD-seq data
- -------------------------------------------------------------
-  Begin run: 2017-06-06 11:00
-  Using args {'preview': False, 'force': False, 'threads': 2, 'results': False, 'quiet': False, 'merge': None, 'ipcluster': False, 'cores': 0, 'params': 'params-cragig008.txt', 'branch': None, 'steps': '1', 'debug': False, 'new': None, 'MPI': False}
-  Platform info: ('Linux', 'ubuntu', '4.4.0-78-generic', '#99-Ubuntu SMP Thu Apr 27 15:29:09 UTC 2017', 'x86_64')
