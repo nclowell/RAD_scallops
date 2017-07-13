@@ -1,7 +1,10 @@
-# test command line args for R
+# 20170713 NL
+# get pop gen stats (Ho, Hs, and Fis) from structure file
 
+# get arguments from command line
 args <- commandArgs(TRUE)
 
+# name arguments
 wd = args[1]
 str = args[2]
 inds = as.numeric(args[3])
@@ -12,10 +15,10 @@ date = args[5]
 library(adegenet)
 library(hierfstat)
 
-# Set working directory
+# set working directory
 setwd(wd)
 
-# Read in structure file
+# read in structure file
 my_data <-read.structure(file = str,
                          n.ind = inds,
                          n.loc = loci,
@@ -26,11 +29,11 @@ my_data <-read.structure(file = str,
                          ask = FALSE
                          )
 
-# Calculate allele frequencies for each locus in each population
+# calculate allele frequencies for each locus in each population
 my_freq <- pop.freq(my_data)
 my_stats <- basic.stats(my_data)
 
-# Write any of these stats out to text files
+# write any of these stats out to text files
 write.table(my_stats$Hs, paste("Hs_",date, ".txt"), sep="\t")
 write.table(my_stats$Ho, paste("Ho_",date, ".txt"), sep="\t")
 write.table(my_stats$Fis, paste("Fis_",date, ".txt"), sep="\t")
