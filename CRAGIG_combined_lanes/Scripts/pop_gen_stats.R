@@ -9,7 +9,7 @@ wd = args[1]
 str = args[2]
 inds = as.numeric(args[3])
 loci = as.numeric(args[4])
-date = args[5]
+date = trimws(args[5])
 
 # import libraries
 library(adegenet)
@@ -34,6 +34,6 @@ my_freq <- pop.freq(my_data)
 my_stats <- basic.stats(my_data)
 
 # write any of these stats out to text files
-write.table(my_stats$Hs, paste("Hs_",date, ".txt"), sep="\t")
-write.table(my_stats$Ho, paste("Ho_",date, ".txt"), sep="\t")
-write.table(my_stats$Fis, paste("Fis_",date, ".txt"), sep="\t")
+write.table(my_stats$Hs, paste0("Hs_", date, ".txt"), sep="\t")
+write.table(my_stats$Ho, paste0("Ho_", date, ".txt"), sep="\t")
+write.table(my_stats$Fis, paste0("Fis_", date, ".txt"), sep="\t")
