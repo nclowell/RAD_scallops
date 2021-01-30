@@ -6,4 +6,4 @@ First, I demultiplexed raw fastq files using [*process_radtags*](https://catchen
 
 Second, I used the [*dDocent*](https://www.ddocent.com/) pipeline to assemble de novo and genotype indivdiuals using default parameters. Configuration file [here]().
 
-Third, I filtered loci and individuals, following [this tutorial](https://www.ddocent.com/filtering/), using a combination of notebooks and scripts. To see how I filtered, start with [this notebook]().
+Third, I filtered loci and individuals, following [this tutorial](https://www.ddocent.com/filtering/), using a combination of notebooks and scripts. To see how I filtered, start with [this notebook](https://github.com/nclowell/RAD_scallops/blob/master/2_assembly_genotyping_and_filtering/filtering.ipynb).
