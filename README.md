@@ -19,7 +19,7 @@ A research team led by my PhD adviser Dr. Lorenz Hauser set out to explore popul
 
 #### Overview of methods
 
-I extracted, quantified and verified quality of DNA from 7 sites spanning from Alaska to California, and then prepared single-digest RAD libraries using *sbfI* follwing [Etter et al 2011](https://link.springer.com/protocol/10.1007/978-1-61779-228-1_9). DNA was sequenced to 150bp at BGI. You can find the library prep protocols in [1_library_prep](https://github.com/nclowell/SeaCukes/tree/master/1_library_prep).
+I extracted, quantified and verified quality of DNA from 7 sites spanning from Alaska to California, and then prepared single-digest RAD libraries using *sbfI* follwing [Etter et al 2011](https://link.springer.com/protocol/10.1007/978-1-61779-228-1_9). DNA was sequenced to 150bp at BGI. You can find the library prep protocols in [1_library_prep](https://github.com/nclowell/RAD_scallops/tree/master/1_library_prep).
 
 I clustered loci and genotyped individuals using the [*dDocent*](https://www.ddocent.com/) pipeline, using a de novo assembly. Genotype data were filtered using [*vcftools*](http://vcftools.sourceforge.net/) and custom python scripts, such that retained loci passed the following filters:
 
