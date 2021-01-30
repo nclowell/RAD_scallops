@@ -2,6 +2,8 @@
 
 ![image](https://github.com/nclowell/RAD_Scallops/blob/master/imgs/scallop.jpg)
 
+[Photo credit](https://www.centralcoastbiodiversity.org/rock-scallop-bull-crassodoma-gigantea.html)
+
 #### Background
 
 For decades, the shellfish growing community has been interested in cultivating the purple-hinged rock scallop. Although growing methods have been challenged by this species' life history (in particular the cementing behavior of adults), there is renewed interest in developing methods for commercial production.
