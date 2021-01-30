@@ -4,9 +4,9 @@
 
 #### Background
 
-For decades, the shellfish growing community has been interested in cultivating purple-hinged rock scallop. Although growing methods have been challenged by this species life history (in particular the cementing behavior of adults), there is renewed interest in developing methods for commercial production.
+For decades, the shellfish growing community has been interested in cultivating the purple-hinged rock scallop. Although growing methods have been challenged by this species' life history (in particular the cementing behavior of adults), there is renewed interest in developing methods for commercial production.
 
-Farmed escapes pose genetic risks to populations: they can cause loss of genetic diversity within and between populations, through the production of many offspring from few broodstock and through the movement of animals due to collection of broodstock and transfer of seed. Therefore, it is important to assess parameters related to genetic diversity to inform native shellfish aquaculture management.
+However, farmed escapes pose genetic risks to populations. If hatchery-produced and wild individuals interbreed, they can cause loss of genetic diversity within and between populations through the production of many offspring from few broodstock and through the movement of animals due to collection of broodstock and transfer of seed. Therefore, it is important to assess parameters related to genetic diversity to inform native shellfish aquaculture management.
 
 A research team led by my PhD adviser Dr. Lorenz Hauser set out to explore population structure and test for local adaptation in the rock scallop, using a multidiscplinary approach. To address several project objectives, I used RAD sequencing to quantify and characterize patterns in population structure, investigate adaptive differentiation, and identify potential drivers of population differentiation. This project was funded by the NOAA Sea Grant Aquaculture Research Program ([project R/SFA/N-1](https://wsg.washington.edu/research/a-new-native-species-for-shellfish-aquaculture-and-precautionary-guidelines-to-protect-wild-populations-local-adaptation-population-differentiation-and-broodstock-development-in-rock-scallops/))
 
