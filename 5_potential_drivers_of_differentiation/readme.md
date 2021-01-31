@@ -8,7 +8,7 @@ I used DAPC and PCA on putatively neutral versus putatively adaptive loci to loo
 
 #### Some results
 
-We did not find evidence for isolation by distance, in that we did not find correlation among genetic and geographic distance.
+I did not find evidence for isolation by distance, in that we did not find correlation among genetic and geographic distance.
 
 ![ibd](https://github.com/nclowell/RAD_scallops/blob/master/imgs/ibd.png?raw=true)
 
