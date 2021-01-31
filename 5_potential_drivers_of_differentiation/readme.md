@@ -12,6 +12,6 @@ We did not find evidence for isolation by distance, in that we did not find corr
 
 ![ibd](https://github.com/nclowell/RAD_scallops/blob/master/imgs/ibd.png?raw=true)
 
-Here are the predictors with the most correlated SNPs (Sc).
+Here are the predictors with the most correlated SNPs (Sc). Depth refers to whether the predictor was measured at sea surface (S) or bottom depth (B).
 
 ![pred](https://github.com/nclowell/RAD_scallops/blob/master/imgs/predictors.PNG?raw=true)
