@@ -12,5 +12,6 @@ For redundancy analysis, I used the R package [*vegan*](https://cran.r-project.o
 
 #### Some results
 
-I found quite limited evidence for adaptive differentiation, identifying only 108 putatively adaptive loci (1.8% of total loci) using any of the approaches above. Using ``Bayenv2``, I identified some significant correlations between environmetnal predictors and SNPs. The environmental predictors with the most correlated SNPs included temperature and current velocity. No RDAs or partial RDAs were significant. No gene annotations were available for putatively adaptive loci.
+I found quite limited evidence for adaptive differentiation, identifying only 108 putatively adaptive loci (1.8% of total loci) using any of the approaches above. Using ``Bayenv2``, I identified some significant correlations between environmetnal predictors and SNPs. The environmental predictors with the most correlated SNPs included temperature and current velocity. No RDAs or partial RDAs were significant. No gene annotations were available for putatively adaptive loci. A plot summarizing the detection of putatively adaptive loci using different methods is provided below, with A = ``OUTFlank``, B = ``BayeScan``, and C = ``BayEnv2``
 
+![putadapt](https://github.com/nclowell/RAD_scallops/blob/master/imgs/putadapt_sum.PNG)
