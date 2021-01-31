@@ -14,4 +14,4 @@ I used [this script]() to run AMOVAs using the following hierarchical groupings:
 
 Overall, detectable population structure almost every way we sliced it. Global Fst = 0.0068 and pairwise Fsts are presented in the table below. Asterisks denote signficant genic differentiation tests.
 
-![fst](https://github.com/nclowell/RAD_sea_cucumbers/blob/master/imgs/pairwise_fst_table.PNG?raw=true)
+![fst](https://github.com/nclowell/RAD_scallops/blob/master/imgs/pairwise_fst.PNG?raw=true)
