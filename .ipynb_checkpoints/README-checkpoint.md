@@ -47,9 +47,9 @@ We investigated potential drivers of observed differentiation. We tested for iso
 
 #### Some results
 
-Data files and all results will be shared publicly here after publication. Below is a DAPC along with site map, to see general patterns of popuation differentiation. Some other results are shared within the readmes per directory of this repo.
+Data files and all results will be shared publicly here after publication. Below is a DAPC and PCA along with site map, to see general patterns of popuation differentiation. We observed very low levels of population differentiation. Some other results are shared within the readmes per directory of this repo.
 
-
+![dapc](https://github.com/nclowell/RAD_scallops/blob/master/imgs/dapc_pca.PNG?raw=true)
 
 #### This repository
 
