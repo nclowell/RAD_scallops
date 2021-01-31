@@ -41,9 +41,7 @@ A major objective of the grant was to investigate the potential for local adapta
 
 Meanwhile, I leveraged my genomic data to look for signatures of local adaptation. Specifically, I used gene-environment association methods including [*bayenv2*](https://gcbias.org/bayenv/) and redundancy analysis. Additionally, I used FST outlier detection to find additional SNPs putatively under selection. For these methods, I used [*Bayescan*](http://cmpg.unibe.ch/software/BayeScan/) and the R package [*OutFLANK*](http://rstudio-pubs-static.s3.amazonaws.com/305384_9aee1c1046394fb9bd8e449453d72847.html). To determine potential biological processes associated with putatively adaptive loci, I used [*blastx*](https://blast.ncbi.nlm.nih.gov/Blast.cgi?LINK_LOC=blasthome&PAGE_TYPE=BlastSearch&PROGRAM=blastx) and the [*UniProt Knowledge Base*](https://www.uniprot.org/help/uniprotkb) to retrieve GO Slim terms. You can find scripts and notebooks associated with these analyses [here]().
 
- Loci were classified as putatively adaptive if identified using at least one of two approaches:
-
-We investigated potential drivers of observed differentiation. We tested for isolation by distance using a Mantel test in R. We also compared patterns of differentiation between putatively neutral and putatively adaptive loci.
+I also investigated potential drivers of observed differentiation. Specifically, I tested for isolation by distance using a Mantel test in R. I also compared patterns of differentiation between putatively neutral and putatively adaptive loci.
 
 #### Some results
 
