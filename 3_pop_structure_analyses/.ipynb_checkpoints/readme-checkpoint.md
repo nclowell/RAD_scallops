@@ -12,6 +12,6 @@ I used [this script](https://github.com/nclowell/RAD_scallops/blob/master/3_pop_
 
 #### Some population structure results
 
-Overall, detectable population structure almost every way we sliced it. Global Fst = 0.0068 and pairwise Fsts are presented in the table below. Asterisks denote signficant genic differentiation tests.
+Overall, we observed low population structure: global Fst = 0.0009 and pairwise Fsts are presented in the table below. Only AMOVAs provided statistically significant results of population strcuture, but still have very small signals.
 
 ![fst](https://github.com/nclowell/RAD_scallops/blob/master/imgs/pairwise_fst.PNG?raw=true)
