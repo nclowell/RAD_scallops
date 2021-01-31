@@ -49,7 +49,7 @@ We investigated potential drivers of observed differentiation. We tested for iso
 
 Data files and all results will be shared publicly here after publication. Below is a DAPC along with site map, to see general patterns of popuation differentiation. Some other results are shared within the readmes per directory of this repo.
 
-![dapc]()
+
 
 #### This repository
 
